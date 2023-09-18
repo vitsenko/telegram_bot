@@ -52,17 +52,17 @@ def get_latest_statistics():
 # Функція, яка буде викликана щоденно о 9:00
 def send_daily_statistics():
     current_time = datetime.now().time()
-    if current_time.hour == 20 and current_time.minute == 6:
+    if current_time.hour == 9 and current_time.minute == 0:
         get_latest_statistics()
 
 
 # Розклад для виклику щоденної функції о 9:00
 
 def daily_scheduler():
-    schedule.every().day.at("20:06").do(send_daily_statistics)
+    schedule.every().day.at("9:00").do(send_daily_statistics)
     while True:
         schedule.run_pending()
-        time.sleep(60)  # Зачекайте 1 хвилину перед перевіркою розкладу
+        time.sleep(59)  # Зачекайте 1 хвилину перед перевіркою розкладу
 
 def daily_scheduler_run():
     loses = Thread(target = daily_scheduler)
