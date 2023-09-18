@@ -28,7 +28,7 @@ def karma_status(message):
 # Обробник команди last_losses. Відправляє статистику втрат ворога в групу
 @bot.message_handler(commands=['last_losses'])
 def karma_status(message):
-    sender_warloses.get_latest_statistics()(message)
+    get_latest_statistics()(message)
 
 
 # Обробник додавання та віднімання карми (карма+ / карма-)    
