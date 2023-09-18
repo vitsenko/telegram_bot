@@ -59,7 +59,7 @@ def send_daily_statistics():
 # Розклад для виклику щоденної функції о 9:00
 
 def daily_scheduler():
-    schedule.every().day.at("9:00").do(send_daily_statistics)
+    schedule.every().day.at("09:00").do(send_daily_statistics)
     while True:
         schedule.run_pending()
         time.sleep(59)  # Зачекайте 1 хвилину перед перевіркою розкладу
