@@ -65,7 +65,10 @@ def daily_scheduler():
     while True:
         schedule.run_pending()
         current_time = datetime.now().time()
-        time.sleep(55)  # Зачекайте 1 хвилину перед перевіркою розкладу
+        now = datetime.now()
+        mess = now.strftime("%Y-%m-%d %H:%M:%S")
+        bot.send_message(os.environ['logger_chat_id'], mess) #псевдологування. Відправка повідломення в групу з поточним часом
+        time.sleep(60)  # Зачекайте 1 хвилину перед перевіркою розкладу
 
 def daily_scheduler_run():
     loses = Thread(target = daily_scheduler)

@@ -14,7 +14,9 @@ def karma_status(message):
     # Підключення до БД
     conn = sqlite3.connect('telebot.db')
     cursor = conn.cursor()
-
+    chat_id = message.chat.id
+    print(chat_id)
+    
     # Отримання списку всіх користувачів і їхньої карми
     cursor.execute("SELECT * FROM users")
     users_list = cursor.fetchall()
@@ -43,7 +45,7 @@ def karma_status(message):
             karma_text += f"{user1}: - \n"
     # Відправка повідомлення зі списком карми
     bot.reply_to(message, karma_text, parse_mode = 'HTML')
-
+    
     chat_id = message.chat.id
     message_id = message.message_id
     bot.delete_message(chat_id, message_id)
