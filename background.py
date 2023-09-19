@@ -12,6 +12,7 @@ def home():
 
 def run():
   app.run(host='0.0.0.0', port=80)
+  print("server running")
 
 def keep_alive():
   t = Thread(target=run)

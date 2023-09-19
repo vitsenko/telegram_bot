@@ -9,6 +9,7 @@ from datetime import datetime, timedelta
 import schedule
 import time
 from threading import Thread
+import pytz
 
 bot = telebot.TeleBot(os.environ['bot_token'])
 
@@ -52,17 +53,19 @@ def get_latest_statistics():
 # Функція, яка буде викликана щоденно о 9:00
 def send_daily_statistics():
     current_time = datetime.now().time()
-    if current_time.hour == 13 and current_time.minute == 38:
+    print(current_time)
+    if current_time.hour == 6 and current_time.minute == 0:
         get_latest_statistics()
 
 
 # Розклад для виклику щоденної функції о 9:00
 
 def daily_scheduler():
-    schedule.every().day.at("13:38").do(send_daily_statistics)
+    schedule.every().day.at("06:00").do(send_daily_statistics)
     while True:
         schedule.run_pending()
-        time.sleep(60)  # Зачекайте 1 хвилину перед перевіркою розкладу
+        current_time = datetime.now().time()
+        time.sleep(55)  # Зачекайте 1 хвилину перед перевіркою розкладу
 
 def daily_scheduler_run():
     loses = Thread(target = daily_scheduler)
