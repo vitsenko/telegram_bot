@@ -9,9 +9,6 @@ from datetime import datetime, timedelta
 from background import keep_alive
 import time
 
-# Визначення глобальної змінної karma_regex (пошук слова Карма+- без врахування регістру)
-karma_regex = re.compile(r'.*(карма\s*[+\-]).*', re.IGNORECASE)
-
 # Список файлів з хендлерами та іншими функціями
 import handler_karma_status
 import handler_karma_handler
@@ -19,19 +16,20 @@ from sender_warloses import daily_scheduler_run
 
 bot = telebot.TeleBot(os.environ['bot_token'])
 
-
 # Обробник команди karma_status. Відправляю дашборд по кармі в групу
 @bot.message_handler(commands=['karma_status'])
 def karma_status(message):
+    gggg = message.chat.type
+    print(gggg)
     handler_karma_status.karma_status(message)
 
+# Обробник додавання та віднімання карми (карма+ / карма-) 
+# Визначення глобальної змінної karma_regex (пошук слова Карма+- без врахування регістру)
+karma_regex = re.compile(r'.*(карма\s*[+\-]).*', re.IGNORECASE)
 
-# Обробник додавання та віднімання карми (карма+ / карма-)    
-@bot.message_handler(func=lambda message: message.chat.type == 'group' and karma_regex.search(message.text))
+@bot.message_handler(func=lambda message: message.chat.type == 'group' or message.chat.type == 'supergroup'  and karma_regex.search(message.text))
 def karma_handler(message):
     handler_karma_handler.karma_handler(message)
-
-
 
 # Запускаєм flask сервер (веб-сервіс, який пінгується монітором, щоб дозволяє звлишити replit активним)
 keep_alive()
