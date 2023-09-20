@@ -34,7 +34,8 @@ def send_statistics_to_telegram(data):
             message += f"{key}: {value}\n"
                 
     # Надсилання повідомлення у групу
-    bot.send_message(group_chat_id, message, parse_mode='HTML')   
+    bot.send_message(group_chat_id, message, parse_mode='HTML') 
+    
 
 def get_latest_statistics():
     url = "https://russianwarship.rip/api/v2/statistics/latest"
@@ -65,8 +66,10 @@ def daily_scheduler():
     while True:
         schedule.run_pending()
         current_time = datetime.now().time()
-        now = datetime.now()
-        mess = now.strftime("%Y-%m-%d %H:%M:%S")
+        
+        nowa = datetime.now()
+        nowa_kyiv = nowa + timedelta(hours = 3)
+        mess = nowa_kyiv.strftime("%Y-%m-%d %H:%M:%S")
         bot.send_message(os.environ['logger_chat_id'], mess) #псевдологування. Відправка повідломення в групу з поточним часом
         time.sleep(60)  # Зачекайте 1 хвилину перед перевіркою розкладу
 

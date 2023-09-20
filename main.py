@@ -12,7 +12,7 @@ import time
 # Список файлів з хендлерами та іншими функціями
 import handler_karma_status
 import handler_karma_handler
-from sender_warloses import daily_scheduler_run
+from sender_warloses import daily_scheduler_run, get_latest_statistics
 
 bot = telebot.TeleBot(os.environ['bot_token'])
 
@@ -23,7 +23,13 @@ def karma_status(message):
     print(gggg)
     handler_karma_status.karma_status(message)
 
+# Обробник команди war_losses. Відправляє статистику по втратам в групу
+@bot.message_handler(commands=['war_losses'])
+def war_losses(message):
+    get_latest_statistics()
+
 # Обробник додавання та віднімання карми (карма+ / карма-) 
+
 # Визначення глобальної змінної karma_regex (пошук слова Карма+- без врахування регістру)
 karma_regex = re.compile(r'.*(карма\s*[+\-]).*', re.IGNORECASE)
 
