@@ -13,7 +13,6 @@ karma_regex = re.compile(r'.*(карма\s*[+\-]).*', re.IGNORECASE)
 bot = telebot.TeleBot(os.environ['bot_token'])
 
 def karma_handler(message):
-    global add_karma_to
     add_karma_to = True
 
     # Підключення до БД
